@@ -19,10 +19,10 @@
             --bg-base: #0f0f11;
             --bg-alt: #16161a;
             --bg-light: #1f1f24;
-            --red: #9B2226;
-            --red-light: #BB2D32;
-            --gold: #D4AF37;
-            --gold-dark: #B5952F;
+            --red: #C81D25;      /* Richer, slightly more vibrant premium red */
+            --red-light: #E5383B; /* Brighter red for hovers and accents */
+            --gold: #F5B700;      /* More vibrant, appetizing yellow-gold */
+            --gold-dark: #D49A00; /* Deeper yellow-gold for depth */
             --text-main: #F5F5F0;
             --text-muted: #A0A0A0;
             --font-title: 'Bebas Neue', sans-serif;
@@ -111,19 +111,19 @@
         .btn-red {
             background: linear-gradient(135deg, var(--red-light), var(--red));
             color: #FFF;
-            box-shadow: 0 4px 15px rgba(155, 34, 38, 0.4);
+            box-shadow: 0 4px 15px rgba(200, 29, 37, 0.4);
         }
         .btn-red:hover {
-            box-shadow: 0 6px 20px rgba(155, 34, 38, 0.6);
+            box-shadow: 0 6px 20px rgba(200, 29, 37, 0.6);
             transform: translateY(-2px);
         }
         .btn-gold {
             background: linear-gradient(135deg, var(--gold), var(--gold-dark));
             color: var(--bg-base);
-            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);
+            box-shadow: 0 4px 15px rgba(245, 183, 0, 0.3);
         }
         .btn-gold:hover {
-            box-shadow: 0 6px 20px rgba(212, 175, 55, 0.5);
+            box-shadow: 0 6px 20px rgba(245, 183, 0, 0.5);
             transform: translateY(-2px);
         }
         .btn-green {
@@ -250,7 +250,7 @@
         }
         .hero-tag {
             display: inline-block;
-            background: rgba(255, 215, 0, 0.1);
+            background: rgba(245, 183, 0, 0.1);
             color: var(--gold);
             padding: 5px 15px;
             border-radius: 20px;
@@ -264,11 +264,9 @@
             line-height: 0.9;
             margin-bottom: 10px;
             text-shadow: 0 10px 30px rgba(0,0,0,0.8);
-            background: linear-gradient(to right, #fff, #d4af37);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
             display: inline-block;
             text-align: center;
+            color: var(--text-main);
         }
         .hero-subtitle {
             font-size: clamp(20px, 3vw, 28px);
@@ -293,7 +291,7 @@
             width: 100%;
             height: auto;
             animation: kenburns 20s infinite alternate linear;
-            filter: drop-shadow(0 20px 40px rgba(212, 175, 55, 0.2));
+            filter: drop-shadow(0 20px 40px rgba(245, 183, 0, 0.2));
         }
         @keyframes kenburns {
             0% { transform: scale(1); }
@@ -334,7 +332,7 @@
             font-size: 50px;
             display: inline-block;
             position: relative;
-            background: linear-gradient(to right, #fff, #d4af37);
+            background: linear-gradient(to right, #fff, #F5B700);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
@@ -407,7 +405,7 @@
             content: '';
             position: absolute;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: linear-gradient(135deg, rgba(212, 175, 55, 0.1) 0%, transparent 100%);
+            background: linear-gradient(135deg, rgba(245, 183, 0, 0.1) 0%, transparent 100%);
             opacity: 0;
             transition: opacity 0.5s ease;
             z-index: 0;
@@ -415,8 +413,8 @@
         }
         .menu-card:hover {
             transform: translateY(-12px);
-            border-color: rgba(212, 175, 55, 0.4);
-            box-shadow: 0 20px 50px rgba(212, 175, 55, 0.2);
+            border-color: rgba(245, 183, 0, 0.4);
+            box-shadow: 0 20px 50px rgba(245, 183, 0, 0.2);
         }
         .menu-card:hover::before {
             opacity: 1;
@@ -485,7 +483,7 @@
             text-align: center;
             text-decoration: none;
             display: block;
-            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.2);
+            box-shadow: 0 4px 15px rgba(245, 183, 0, 0.2);
             position: relative;
             overflow: hidden;
         }
@@ -499,7 +497,7 @@
         }
         .card-price-btn:hover {
             transform: translateY(-3px);
-            box-shadow: 0 10px 25px rgba(212, 175, 55, 0.5);
+            box-shadow: 0 10px 25px rgba(245, 183, 0, 0.5);
         }
         .card-price-btn:hover::after {
             left: 100%;
@@ -517,6 +515,35 @@
             grid-template-columns: 1fr 1fr;
             gap: 60px;
         }
+        .side-card {
+            flex-direction: row; 
+            align-items: center; 
+            gap: 20px; 
+            padding: 15px 20px;
+        }
+        .side-card img {
+            width: 80px; 
+            height: 80px; 
+            object-fit: cover; 
+            border-radius: 10px;
+        }
+        .side-card-content {
+            flex-grow: 1;
+        }
+        .side-card-title {
+            font-size: 24px;
+        }
+        .side-card-desc {
+            font-size: 13px; 
+            color: var(--text-muted);
+        }
+        .side-card-btn {
+            padding: 8px 20px; 
+            font-size: 18px; 
+            font-family: var(--font-title); 
+            border: none;
+        }
+        
         .fries-container .menu-card {
             margin-bottom: 20px;
         }
@@ -526,7 +553,7 @@
             backdrop-filter: blur(10px);
             padding: 40px;
             border-radius: 24px;
-            border: 1px solid rgba(212, 175, 55, 0.2);
+            border: 1px solid rgba(245, 183, 0, 0.2);
             height: 100%;
             box-shadow: 0 10px 30px rgba(0,0,0,0.2);
         }
@@ -573,8 +600,8 @@
         }
         .diff-card:hover {
             transform: translateY(-10px);
-            border-color: rgba(212, 175, 55, 0.3);
-            box-shadow: 0 15px 40px rgba(212, 175, 55, 0.15);
+            border-color: rgba(245, 183, 0, 0.3);
+            box-shadow: 0 15px 40px rgba(245, 183, 0, 0.15);
         }
         .diff-icon {
             font-size: 50px;
@@ -681,7 +708,13 @@
             align-items: center;
             gap: 10px;
             box-shadow: 0 10px 20px rgba(0,0,0,0.3);
-            border: 1px solid rgba(255,255,255,0.1);
+            border: 1px solid rgba(245, 183, 0, 0.2);
+            transition: all 0.3s ease;
+        }
+        .addon-pill:hover {
+            border-color: rgba(245, 183, 0, 0.5);
+            transform: translateY(-3px);
+            box-shadow: 0 15px 25px rgba(245, 183, 0, 0.2);
         }
         .addon-pill span {
             color: var(--gold);
@@ -856,7 +889,7 @@
             border-radius: 24px;
             width: 90%;
             max-width: 500px;
-            border: 1px solid rgba(212, 175, 55, 0.3);
+            border: 1px solid rgba(245, 183, 0, 0.3);
             position: relative;
             box-shadow: 0 25px 50px rgba(0,0,0,0.5);
             transform: scale(0.95);
@@ -880,7 +913,7 @@
 
         .drink-select {
             width: 100%; padding: 12px; background: var(--bg-base); color: white;
-            border: 1px solid rgba(255,215,0,0.3); border-radius: 8px; font-size: 16px;
+            border: 1px solid rgba(245,183,0,0.3); border-radius: 8px; font-size: 16px;
             font-family: var(--font-text); outline: none;
         }
         .drink-select:focus { border-color: var(--gold); }
@@ -899,7 +932,7 @@
             position: fixed; top: 0; right: -400px; width: 100%; max-width: 400px;
             height: 100%; background: rgba(15, 15, 17, 0.98); z-index: 2000;
             backdrop-filter: blur(25px);
-            border-left: 1px solid rgba(255,255,255,0.05); 
+            border-left: 1px solid rgba(245, 183, 0, 0.2); 
             transition: right 0.5s cubic-bezier(0.25, 1, 0.5, 1);
             display: flex; flex-direction: column;
             box-shadow: -10px 0 30px rgba(0,0,0,0.5);
@@ -911,8 +944,13 @@
 
         .cart-item {
             background: rgba(22, 22, 26, 0.6); padding: 15px; border-radius: 12px;
-            margin-bottom: 15px; border: 1px solid rgba(255,255,255,0.05);
+            margin-bottom: 15px; border: 1px solid rgba(245, 183, 0, 0.1);
             box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+        }
+        .cart-item:hover {
+            border-color: rgba(245, 183, 0, 0.3);
+            transform: translateY(-2px);
         }
         .cart-item-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 5px; }
         .cart-item-title { font-weight: bold; font-size: 16px; color: var(--gold); }
@@ -924,7 +962,7 @@
             position: fixed; bottom: 100px; right: 30px; background: linear-gradient(135deg, var(--gold), var(--gold-dark));
             color: var(--bg-base); width: 60px; height: 60px; border-radius: 50%;
             display: flex; justify-content: center; align-items: center; font-size: 24px;
-            box-shadow: 0 5px 20px rgba(212, 175, 55, 0.4); z-index: 1000; cursor: pointer;
+            box-shadow: 0 5px 20px rgba(245, 183, 0, 0.4); z-index: 1000; cursor: pointer;
             transition: all 0.3s;
         }
         .float-cart:hover { transform: scale(1.1); background: var(--gold-dark); }
@@ -945,7 +983,6 @@
             .diff-grid, .sides-grid { grid-template-columns: repeat(2, 1fr); }
             .footer-grid { grid-template-columns: repeat(2, 1fr); gap: 40px; }
             .about-grid { grid-template-columns: 1fr; gap: 40px; text-align: center; }
-            .about-image { margin: 0 auto; }
             .about-text { align-items: center; display: flex; flex-direction: column; }
             .cta-title { font-size: clamp(50px, 8vw, 80px); }
         }
@@ -970,25 +1007,40 @@
             .nav-links.active a { padding: 15px 0; font-size: 18px; }
 
             /* Hero Section */
-            .hero { padding: 120px 0 60px; }
-            .hero-container { grid-template-columns: 1fr; text-align: center; gap: 40px; }
-            .hero-title { font-size: clamp(50px, 15vw, 70px); line-height: 0.9; margin-bottom: 15px; }
-            .hero-subtitle { font-size: clamp(20px, 6vw, 28px); }
-            .hero-desc { margin: 0 auto 30px; font-size: 16px; max-width: 90%; }
-            .hero-badge { right: 5%; top: -10px; font-size: 14px; padding: 15px; }
-            .hero-image { min-height: 250px; width: 100%; max-width: 400px; margin: 0 auto; }
+            .hero { padding: 120px 0 40px; overflow: hidden; }
+            .hero-container { display: flex; flex-direction: column-reverse; text-align: center; gap: 10px; }
+            .hero-title { font-size: clamp(50px, 15vw, 70px); line-height: 0.9; margin-bottom: 10px; }
+            .hero-subtitle { font-size: clamp(20px, 6vw, 28px); margin-bottom: 15px; }
+            .hero-desc { margin: 0 auto 25px; font-size: 16px; max-width: 95%; }
+            .hero-badge { right: 0; top: 0; font-size: 12px; padding: 12px; }
+            .hero-image-wrapper { margin-bottom: -30px; width: 100%; }
+            .hero-image { min-height: 250px; width: 120%; max-width: 500px; margin: 0 -10%; object-fit: contain; }
 
             /* Typography & Spacing */
             .section-title { font-size: clamp(35px, 10vw, 50px); }
-            section { padding: 60px 0; }
+            section { padding: 50px 0; }
             
             /* Grids & Cards */
-            .menu-card { flex: 0 0 calc(85%); } /* Carrossel Mobile */
+            .menu-card { flex: 0 0 calc(85%); padding: 25px 20px; } /* Carrossel Mobile */
+            .card-img-wrapper { height: 150px; }
             .carousel-container { padding: 0; }
+            .carousel-track { gap: 15px; padding-bottom: 20px; }
             .carousel-btn { display: none; } /* Hide arrows on mobile, rely on swipe */
             .sides-grid, .diff-grid { grid-template-columns: 1fr; gap: 20px; }
-            .stats-container { flex-direction: column; gap: 20px; }
+            .stats-container { flex-direction: row; flex-wrap: wrap; justify-content: space-around; gap: 30px; }
             .diff-card { padding: 25px 20px; }
+            
+            /* About & Gallery */
+            .about-grid { grid-template-columns: 1fr; gap: 40px; text-align: center; }
+            .about-text { align-items: center; display: flex; flex-direction: column; }
+            .gallery-grid { grid-template-rows: 150px 150px; gap: 10px; }
+            
+            /* Side Cards (Fries/Drinks) */
+            .side-card { flex-direction: column; text-align: center; gap: 15px; }
+            .side-card img { width: 120px; height: 120px; }
+            .side-card-btn { width: 100%; }
+            .drinks-list { padding: 25px 20px; }
+            .drink-item { font-size: 16px; margin-bottom: 20px; }
 
             /* Addons */
             .addons-flex { flex-wrap: wrap; justify-content: center; gap: 10px; }
@@ -1022,6 +1074,8 @@
         }
 
         @media (max-width: 480px) {
+            .nav-logo { font-size: 24px; }
+            .nav-logo svg { width: 28px; height: 28px; }
             .menu-card { flex: 0 0 calc(90%); }
             .hero-title { font-size: clamp(45px, 12vw, 55px); }
             .section-title { font-size: clamp(30px, 9vw, 40px); }
@@ -1067,7 +1121,7 @@
         <div class="container hero-container">
             <div class="hero-content fade-up">
                 <span class="hero-tag">🔥 Nova Sensação</span>
-                <h1 class="hero-title bebas"><span class="text-gold">JP</span><br>LANCHES</h1>
+                <h1 class="hero-title bebas"><span class="text-gold">JP</span><br><span class="text-red">LANCHES</span></h1>
                 <h2 class="hero-subtitle"><i>sabor que você respeita</i></h2>
                 <p class="hero-desc">Peça sem fila e sem espera. Entrega rápida na sua porta com a qualidade que você merece.</p>
                 <a href="#cardapio" class="btn btn-red" style="font-size: 18px; padding: 15px 40px;">PEDIR AGORA</a>
@@ -1397,7 +1451,7 @@
                 <div class="menu-card">
                     <div class="card-tag ${colorClass}">DESTAQUE</div>
                     <div class="card-img-wrapper">
-                        <img src="${b.image || ''}" alt="${b.name}" class="card-img" style="background: transparent; min-width: 150px; min-height: 150px; border-radius: 10px;">
+                        <img src="${b.image || ''}" alt="${b.name}" class="card-img" style="background: transparent; border-radius: 10px;">
                     </div>
                     <h3 class="card-title bebas">${b.name}</h3>
                     <p class="card-desc">${b.desc}</p>
@@ -1411,13 +1465,13 @@
         fries.forEach((f, index) => {
             const colorClass = index % 2 === 0 ? 'gold' : 'red';
             friesList.innerHTML += `
-                <div class="menu-card" style="flex-direction: row; align-items: center; gap: 20px; padding: 15px 20px;">
-                    <img src="${f.image}" alt="${f.name}" style="width: 80px; height: 80px; object-fit: cover; border-radius: 10px;">
-                    <div style="flex-grow: 1;">
-                        <h3 class="bebas" style="font-size: 24px; color: var(--${colorClass});">${f.name}</h3>
-                        <p style="font-size: 13px; color: var(--text-muted);">${f.desc}</p>
+                <div class="menu-card side-card">
+                    <img src="${f.image}" alt="${f.name}">
+                    <div class="side-card-content">
+                        <h3 class="bebas side-card-title" style="color: var(--${colorClass});">${f.name}</h3>
+                        <p class="side-card-desc">${f.desc}</p>
                     </div>
-                    <button onclick="openItemModal('${f.name}', '${f.price}', '${f.desc}', 'fries')" class="btn btn-gold" style="padding: 8px 20px; font-size: 18px; font-family: var(--font-title); border: none;">R$ ${f.price}</button>
+                    <button onclick="openItemModal('${f.name}', '${f.price}', '${f.desc}', 'fries')" class="btn btn-gold side-card-btn">R$ ${f.price}</button>
                 </div>
             `;
         });
