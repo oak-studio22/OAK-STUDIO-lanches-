@@ -336,6 +336,41 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
+        
+        .search-container {
+            position: relative;
+            max-width: 500px;
+            margin: 30px auto 0;
+            width: 100%;
+        }
+        .menu-search-input {
+            width: 100%;
+            padding: 15px 20px 15px 50px;
+            border-radius: 30px;
+            border: 1px solid rgba(245, 183, 0, 0.3);
+            background: rgba(255, 255, 255, 0.05);
+            color: white;
+            font-size: 16px;
+            font-family: var(--font-text);
+            outline: none;
+            transition: all 0.3s ease;
+        }
+        .menu-search-input:focus {
+            border-color: var(--gold);
+            background: rgba(255, 255, 255, 0.1);
+            box-shadow: 0 0 15px rgba(245, 183, 0, 0.2);
+        }
+        .menu-search-input::placeholder {
+            color: rgba(255, 255, 255, 0.5);
+        }
+        .search-icon {
+            position: absolute;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--gold);
+            font-size: 18px;
+        }
         .section-title::after {
             content: '';
             position: absolute;
@@ -646,7 +681,7 @@
         }
         .about-grid {
             display: grid;
-            grid-template-columns: 1fr 1fr;
+            grid-template-columns: 1fr;
             gap: 60px;
             align-items: center;
         }
@@ -906,10 +941,74 @@
         }
         .close-modal:hover, .close-cart:hover { color: var(--red-light); }
 
-        .addon-checkbox {
-            display: block; margin-bottom: 10px; cursor: pointer; font-size: 16px;
+        .addons-list {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
         }
-        .addon-checkbox input { margin-right: 10px; accent-color: var(--red); transform: scale(1.2); }
+        .addon-checkbox {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 15px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 15px;
+            user-select: none;
+            margin-bottom: 0;
+        }
+        .addon-checkbox:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(245, 183, 0, 0.3);
+        }
+        .addon-checkbox input {
+            display: none;
+        }
+        .addon-checkbox.selected {
+            background: rgba(245, 183, 0, 0.15);
+            border-color: var(--gold);
+            box-shadow: 0 0 15px rgba(245, 183, 0, 0.2);
+        }
+        .addon-checkbox.selected .addon-name {
+            color: var(--gold);
+            font-weight: 600;
+        }
+        .addon-checkbox .check-icon {
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            border: 2px solid rgba(255,255,255,0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+        .addon-checkbox.selected .check-icon {
+            background: var(--gold);
+            border-color: var(--gold);
+        }
+        .addon-checkbox.selected .check-icon::after {
+            content: '\f00c';
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            color: #000;
+            font-size: 12px;
+        }
+        .addon-details {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+        .addon-price {
+            font-size: 13px;
+            color: var(--text-muted);
+        }
+        .addon-checkbox.selected .addon-price {
+            color: rgba(245, 183, 0, 0.8);
+        }
 
         .drink-select {
             width: 100%; padding: 12px; background: var(--bg-base); color: white;
@@ -1083,6 +1182,7 @@
             .card-price { font-size: 22px; }
             .btn { padding: 10px 20px; font-size: 14px; }
             .hero-badge { right: 0; transform: scale(0.8); }
+            .addons-list { grid-template-columns: 1fr; }
         }
     </style>
 </head>
@@ -1139,6 +1239,10 @@
         <div class="container">
             <div class="section-header fade-up">
                 <h2 class="section-title bebas">Nosso Cardápio</h2>
+                <div class="search-container">
+                    <i class="fa-solid fa-search search-icon"></i>
+                    <input type="text" id="menu-search" class="menu-search-input" placeholder="Buscar lanches, batatas ou bebidas...">
+                </div>
             </div>
             
             <div class="carousel-container fade-up" style="transition-delay: 0.2s;">
@@ -1235,18 +1339,14 @@
     <section class="about-section">
         <div class="container">
             <div class="about-grid">
-                <div class="gallery-grid fade-up">
-                    <!-- ADICIONE FOTO DO AMBIENTE / PRODUTO AQUI -->
-                    <img src="" alt="Galeria 1" class="gallery-img">
-                    <!-- ADICIONE FOTO DO AMBIENTE / PRODUTO AQUI -->
-                    <img src="" alt="Galeria 2" class="gallery-img">
-                    <!-- ADICIONE FOTO DO AMBIENTE / PRODUTO AQUI -->
-                    <img src="" alt="Galeria 3" class="gallery-img">
-                </div>
-                <div class="about-text fade-up" style="transition-delay: 0.2s;">
-                    <h2 class="bebas">Nossa História</h2>
-                    <p>A JP Lanches nasceu da paixão por hambúrgueres de verdade. Cada lanche é feito com ingredientes frescos, blend selecionado e muito amor. Nosso compromisso é entregar não apenas uma refeição, mas uma experiência incrível.</p>
-                    <p>Venha nos visitar ou peça pelo delivery e descubra por que somos o sabor que você respeita!</p>
+                <div class="about-text fade-up" style="transition-delay: 0.2s; text-align: center; align-items: center; display: flex; flex-direction: column;">
+                    <h2 class="bebas">Por que escolher a JP Lanches?</h2>
+                    <p>Não somos apenas mais uma hamburgueria. Somos apaixonados por entregar a melhor experiência em cada mordida. Veja por que nossos clientes sempre voltam:</p>
+                    <ul style="list-style: none; padding: 0; margin: 20px 0;">
+                        <li style="margin-bottom: 10px; display: flex; align-items: center;"><i class="fa-solid fa-check text-gold" style="margin-right: 10px; font-size: 20px;"></i> <span><strong>Ingredientes Frescos:</strong> Selecionados diariamente para garantir o máximo sabor.</span></li>
+                        <li style="margin-bottom: 10px; display: flex; align-items: center;"><i class="fa-solid fa-check text-gold" style="margin-right: 10px; font-size: 20px;"></i> <span><strong>Blend Exclusivo:</strong> Carnes suculentas e preparadas com perfeição.</span></li>
+                        <li style="margin-bottom: 10px; display: flex; align-items: center;"><i class="fa-solid fa-check text-gold" style="margin-right: 10px; font-size: 20px;"></i> <span><strong>Entrega Rápida:</strong> Seu lanche chega quentinho e no tempo certo.</span></li>
+                    </ul>
                     <a href="https://wa.me/5521986786447" target="_blank" class="btn btn-red mt-4">FALAR NO WHATSAPP</a>
                 </div>
             </div>
@@ -1370,10 +1470,38 @@
             <div id="modal-addons-section">
                 <h3 class="bebas text-gold" style="font-size: 24px; margin-bottom: 10px;">Acompanhamentos</h3>
                 <div class="addons-list" id="modal-addons">
-                    <label class="addon-checkbox"><input type="checkbox" value="3.50" data-name="Carne Extra"> Carne Extra (+ R$ 3,50)</label>
-                    <label class="addon-checkbox"><input type="checkbox" value="2.50" data-name="Ovo"> Ovo (+ R$ 2,50)</label>
-                    <label class="addon-checkbox"><input type="checkbox" value="2.00" data-name="Cheddar"> Cheddar (+ R$ 2,00)</label>
-                    <label class="addon-checkbox"><input type="checkbox" value="2.50" data-name="Bacon"> Bacon (+ R$ 2,50)</label>
+                    <label class="addon-checkbox">
+                        <input type="checkbox" value="3.50" data-name="Carne Extra">
+                        <div class="addon-details">
+                            <span class="addon-name">Carne Extra</span>
+                            <span class="addon-price">+ R$ 3,50</span>
+                        </div>
+                        <div class="check-icon"></div>
+                    </label>
+                    <label class="addon-checkbox">
+                        <input type="checkbox" value="2.50" data-name="Ovo">
+                        <div class="addon-details">
+                            <span class="addon-name">Ovo</span>
+                            <span class="addon-price">+ R$ 2,50</span>
+                        </div>
+                        <div class="check-icon"></div>
+                    </label>
+                    <label class="addon-checkbox">
+                        <input type="checkbox" value="2.00" data-name="Cheddar">
+                        <div class="addon-details">
+                            <span class="addon-name">Cheddar</span>
+                            <span class="addon-price">+ R$ 2,00</span>
+                        </div>
+                        <div class="check-icon"></div>
+                    </label>
+                    <label class="addon-checkbox">
+                        <input type="checkbox" value="2.50" data-name="Bacon">
+                        <div class="addon-details">
+                            <span class="addon-name">Bacon</span>
+                            <span class="addon-price">+ R$ 2,50</span>
+                        </div>
+                        <div class="check-icon"></div>
+                    </label>
                 </div>
             </div>
 
@@ -1474,6 +1602,43 @@
                     <button onclick="openItemModal('${f.name}', '${f.price}', '${f.desc}', 'fries')" class="btn btn-gold side-card-btn">R$ ${f.price}</button>
                 </div>
             `;
+        });
+
+        // Lógica de Busca (Search)
+        document.getElementById('menu-search').addEventListener('input', function(e) {
+            const term = e.target.value.toLowerCase();
+            
+            // Filtrar Hambúrgueres
+            document.querySelectorAll('#burger-track .menu-card').forEach(card => {
+                const title = card.querySelector('.card-title').innerText.toLowerCase();
+                const desc = card.querySelector('.card-desc').innerText.toLowerCase();
+                if (title.includes(term) || desc.includes(term)) {
+                    card.style.display = 'flex';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+
+            // Filtrar Batatas
+            document.querySelectorAll('#fries-list .menu-card').forEach(card => {
+                const title = card.querySelector('.side-card-title').innerText.toLowerCase();
+                const desc = card.querySelector('.side-card-desc').innerText.toLowerCase();
+                if (title.includes(term) || desc.includes(term)) {
+                    card.style.display = 'flex';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+
+            // Filtrar Bebidas
+            document.querySelectorAll('.drink-item').forEach(item => {
+                const title = item.querySelector('.drink-name').innerText.toLowerCase();
+                if (title.includes(term)) {
+                    item.style.display = 'flex';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
         });
 
         // Navbar Scroll Effect
@@ -1585,7 +1750,10 @@
             }
             
             // Reset inputs
-            document.querySelectorAll('.addon-checkbox input').forEach(cb => cb.checked = false);
+            document.querySelectorAll('.addon-checkbox input').forEach(cb => {
+                cb.checked = false;
+                cb.closest('.addon-checkbox').classList.remove('selected');
+            });
             document.getElementById('modal-drink').value = "0";
             
             updateModalPrice();
@@ -1624,7 +1792,14 @@
         }
 
         document.querySelectorAll('.addon-checkbox input').forEach(cb => {
-            cb.addEventListener('change', updateModalPrice);
+            cb.addEventListener('change', function() {
+                if(this.checked) {
+                    this.closest('.addon-checkbox').classList.add('selected');
+                } else {
+                    this.closest('.addon-checkbox').classList.remove('selected');
+                }
+                updateModalPrice();
+            });
         });
         document.getElementById('modal-drink').addEventListener('change', updateModalPrice);
 
