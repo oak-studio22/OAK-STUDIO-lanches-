@@ -1,0 +1,1558 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JP Lanches | O sabor que você respeita!</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        /* Variáveis */
+        :root {
+            --bg-base: #0f0f11;
+            --bg-alt: #16161a;
+            --bg-light: #1f1f24;
+            --red: #9B2226;
+            --red-light: #BB2D32;
+            --gold: #D4AF37;
+            --gold-dark: #B5952F;
+            --text-main: #F5F5F0;
+            --text-muted: #A0A0A0;
+            --font-title: 'Bebas Neue', sans-serif;
+            --font-text: 'Outfit', sans-serif;
+        }
+
+        /* Reset & Base */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        html {
+            scroll-behavior: smooth;
+        }
+        body {
+            font-family: var(--font-text);
+            background-color: var(--bg-base);
+            color: var(--text-main);
+            overflow-x: hidden;
+            background-image: radial-gradient(circle at 50% 0%, #1f1f24 0%, #0f0f11 60%);
+            background-attachment: fixed;
+        }
+        h1, h2, h3, h4, .bebas {
+            font-family: var(--font-title);
+            letter-spacing: 1px;
+            font-weight: normal;
+        }
+        a { text-decoration: none; color: inherit; }
+        ul { list-style: none; }
+        img { max-width: 100%; display: block; }
+
+        /* Utilitários */
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        .text-gold { color: var(--gold); }
+        .text-red { color: var(--red-light); }
+        .text-center { text-align: center; }
+        
+        /* Animações Globais */
+        .fade-up {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+        .fade-up.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Botões */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 12px 32px;
+            font-family: var(--font-text);
+            font-weight: 600;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            border: none;
+            text-transform: uppercase;
+            font-size: 14px;
+            letter-spacing: 1px;
+        }
+        .btn::after {
+            content: '';
+            position: absolute;
+            top: 0; left: -100%;
+            width: 50%; height: 100%;
+            background: linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(255,255,255,0.3) 50%, rgba(255,255,255,0) 100%);
+            transform: skewX(-25deg);
+            transition: all 0.6s ease;
+        }
+        .btn:hover::after {
+            left: 150%;
+        }
+        .btn-red {
+            background: linear-gradient(135deg, var(--red-light), var(--red));
+            color: #FFF;
+            box-shadow: 0 4px 15px rgba(155, 34, 38, 0.4);
+        }
+        .btn-red:hover {
+            box-shadow: 0 6px 20px rgba(155, 34, 38, 0.6);
+            transform: translateY(-2px);
+        }
+        .btn-gold {
+            background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+            color: var(--bg-base);
+            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);
+        }
+        .btn-gold:hover {
+            box-shadow: 0 6px 20px rgba(212, 175, 55, 0.5);
+            transform: translateY(-2px);
+        }
+        .btn-green {
+            background: linear-gradient(135deg, #25D366, #128C7E);
+            color: #FFF;
+            box-shadow: 0 4px 15px rgba(37, 211, 102, 0.4);
+        }
+        .btn-green:hover {
+            box-shadow: 0 6px 20px rgba(37, 211, 102, 0.6);
+            transform: translateY(-2px);
+        }
+
+        /* SEÇÃO 1 — NAVBAR FIXA */
+        .navbar {
+            position: fixed;
+            top: 0; left: 0; width: 100%;
+            padding: 20px 0;
+            z-index: 1000;
+            transition: all 0.4s ease;
+            background: transparent;
+        }
+        .navbar.scrolled {
+            background: rgba(15, 15, 17, 0.85);
+            backdrop-filter: blur(12px);
+            padding: 15px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .nav-logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 32px;
+        }
+        .nav-logo svg {
+            width: 35px; height: 35px;
+            fill: var(--gold);
+        }
+        .nav-links {
+            display: flex;
+            gap: 30px;
+        }
+        .nav-links a {
+            font-weight: 600;
+            font-size: 15px;
+            transition: color 0.3s;
+        }
+        .nav-links a:hover {
+            color: var(--gold);
+        }
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        .menu-toggle {
+            display: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: var(--text-main);
+        }
+
+        /* Redes Sociais Fixas (Desktop) */
+        .fixed-socials {
+            position: fixed;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            z-index: 100;
+        }
+        .fixed-socials a {
+            color: var(--text-muted);
+            font-size: 20px;
+            transition: all 0.3s;
+        }
+        .fixed-socials a:hover {
+            color: var(--gold);
+            transform: scale(1.2);
+        }
+
+        /* SEÇÃO 2 — HERO PRINCIPAL */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding-top: 80px;
+            position: relative;
+            overflow: hidden;
+        }
+        .hero-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            align-items: center;
+        }
+        .hero-content {
+            z-index: 2;
+        }
+        .hero-tag {
+            display: inline-block;
+            background: rgba(255, 215, 0, 0.1);
+            color: var(--gold);
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            border: 1px solid var(--gold);
+        }
+        .hero-title {
+            font-size: clamp(60px, 8vw, 120px);
+            line-height: 0.9;
+            margin-bottom: 10px;
+            text-shadow: 0 10px 30px rgba(0,0,0,0.8);
+            background: linear-gradient(to right, #fff, #d4af37);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: inline-block;
+        }
+        .hero-subtitle {
+            font-size: clamp(20px, 3vw, 28px);
+            color: var(--text-muted);
+            font-weight: 300;
+            margin-bottom: 20px;
+        }
+        .hero-desc {
+            font-size: 16px;
+            color: var(--text-muted);
+            margin-bottom: 40px;
+            max-width: 400px;
+        }
+        .hero-image-wrapper {
+            position: relative;
+            z-index: 1;
+            animation: float 8s ease-in-out infinite;
+        }
+        .hero-image {
+            width: 100%;
+            height: auto;
+            animation: kenburns 20s infinite alternate linear;
+            filter: drop-shadow(0 20px 40px rgba(212, 175, 55, 0.2));
+        }
+        @keyframes kenburns {
+            0% { transform: scale(1); }
+            100% { transform: scale(1.05); }
+        }
+        .hero-badge {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+            color: var(--bg-base);
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            font-family: var(--font-title);
+            font-size: 22px;
+            line-height: 1;
+            transform: rotate(15deg);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.5);
+            z-index: 3;
+        }
+
+        /* SEÇÃO 3 — CARDÁPIO / MENU */
+        .menu-section {
+            padding: 100px 0;
+            background: transparent;
+            position: relative;
+        }
+        .section-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+        .section-title {
+            font-size: 50px;
+            display: inline-block;
+            position: relative;
+            background: linear-gradient(to right, #fff, #d4af37);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 3px;
+            background: var(--red);
+        }
+        
+        .carousel-container {
+            position: relative;
+            padding: 0 40px;
+        }
+        .carousel-track {
+            display: flex;
+            gap: 30px;
+            overflow-x: auto;
+            scroll-snap-type: x mandatory;
+            scrollbar-width: none; /* Firefox */
+            padding-bottom: 40px;
+            scroll-behavior: smooth;
+        }
+        .carousel-track::-webkit-scrollbar {
+            display: none; /* Chrome/Safari */
+        }
+        .carousel-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 50px; height: 50px;
+            border-radius: 50%;
+            background: var(--bg-light);
+            border: 1px solid rgba(255,255,255,0.1);
+            color: var(--gold);
+            font-size: 20px;
+            cursor: pointer;
+            z-index: 10;
+            transition: all 0.3s;
+            display: flex; justify-content: center; align-items: center;
+        }
+        .carousel-btn:hover {
+            background: var(--red);
+            color: #FFF;
+            border-color: var(--red);
+        }
+        .prev-btn { left: -10px; }
+        .next-btn { right: -10px; }
+
+        .menu-card {
+            flex: 0 0 calc(25% - 22.5px); /* 4 items per row on desktop */
+            scroll-snap-align: start;
+            background: rgba(22, 22, 26, 0.6);
+            backdrop-filter: blur(10px);
+            border-radius: 24px;
+            padding: 30px 25px;
+            border: 1px solid rgba(255,255,255,0.03);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+        .menu-card:hover {
+            transform: scale(1.03) translateY(-10px);
+            border-color: rgba(212, 175, 55, 0.3);
+            box-shadow: 0 15px 40px rgba(212, 175, 55, 0.15);
+        }
+        .card-tag {
+            font-family: var(--font-title);
+            font-size: 18px;
+            letter-spacing: 1px;
+            margin-bottom: 15px;
+            text-align: center;
+            text-shadow: 0 2px 5px rgba(0,0,0,0.5);
+        }
+        .card-tag.red { color: var(--red-light); }
+        .card-tag.gold { color: var(--gold); }
+        
+        .card-img-wrapper {
+            width: 100%;
+            height: 180px;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            animation: float 6s ease-in-out infinite;
+        }
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+        .card-img {
+            max-height: 100%;
+            object-fit: contain;
+            transition: transform 0.5s;
+            filter: drop-shadow(0 10px 15px rgba(0,0,0,0.5));
+        }
+        .menu-card:hover .card-img {
+            transform: scale(1.1) rotate(2deg);
+        }
+        .card-title {
+            font-size: 28px;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+        .card-desc {
+            font-size: 13px;
+            color: var(--text-muted);
+            text-align: center;
+            margin-bottom: 25px;
+            flex-grow: 1;
+        }
+        .card-price-btn {
+            width: 100%;
+            background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+            color: var(--bg-base);
+            border: none;
+            padding: 12px;
+            border-radius: 30px;
+            font-family: var(--font-title);
+            font-size: 22px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: center;
+            text-decoration: none;
+            display: block;
+            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.2);
+        }
+        .card-price-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 20px rgba(212, 175, 55, 0.4);
+        }
+
+        /* SEÇÃO 4 — BATATAS & BEBIDAS */
+        .sides-section {
+            padding: 100px 0;
+            background: transparent;
+            border-top: 1px solid rgba(255,255,255,0.05);
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+        .sides-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+        }
+        .fries-container .menu-card {
+            margin-bottom: 20px;
+        }
+        
+        .drinks-list {
+            background: rgba(22, 22, 26, 0.6);
+            backdrop-filter: blur(10px);
+            padding: 40px;
+            border-radius: 24px;
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            height: 100%;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+        .drink-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            margin-bottom: 25px;
+            font-size: 18px;
+        }
+        .drink-name { font-weight: 600; }
+        .drink-dots {
+            flex-grow: 1;
+            border-bottom: 2px dotted var(--gold);
+            margin: 0 15px 6px 15px;
+            opacity: 0.4;
+        }
+        .drink-price {
+            font-family: var(--font-title);
+            font-size: 24px;
+            color: var(--gold);
+        }
+
+        /* SEÇÃO 5 — DIFERENCIAIS */
+        .differentials {
+            padding: 100px 0;
+            background: transparent;
+        }
+        .diff-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+        .diff-card {
+            background: rgba(22, 22, 26, 0.6);
+            backdrop-filter: blur(10px);
+            padding: 40px 30px;
+            text-align: center;
+            border-radius: 24px;
+            border: 1px solid rgba(255,255,255,0.03);
+            transition: all 0.4s ease;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+        .diff-card:hover {
+            transform: translateY(-10px);
+            border-color: rgba(212, 175, 55, 0.3);
+            box-shadow: 0 15px 40px rgba(212, 175, 55, 0.15);
+        }
+        .diff-icon {
+            font-size: 50px;
+            color: var(--red-light);
+            margin-bottom: 20px;
+        }
+        .diff-title {
+            font-size: 26px;
+            margin-bottom: 15px;
+        }
+        .diff-desc {
+            color: var(--text-muted);
+            font-size: 14px;
+        }
+        
+        .stats-container {
+            display: flex;
+            justify-content: center;
+            gap: 80px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            padding-top: 50px;
+        }
+        .stat-item { text-align: center; }
+        .stat-num {
+            font-family: var(--font-title);
+            font-size: 60px;
+            color: var(--gold);
+            line-height: 1;
+            margin-bottom: 5px;
+        }
+        .stat-label {
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--text-muted);
+        }
+
+        /* SEÇÃO 6 — GALERIA / SOBRE */
+        .about-section {
+            padding: 100px 0;
+            background: transparent;
+        }
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+        }
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-template-rows: 200px 200px;
+            gap: 15px;
+        }
+        .gallery-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 12px;
+            background: #222; /* Placeholder bg */
+        }
+        .gallery-img:first-child {
+            grid-row: span 2;
+            height: 100%;
+        }
+        .about-text h2 {
+            font-size: 60px;
+            margin-bottom: 20px;
+            color: var(--gold);
+        }
+        .about-text p {
+            font-size: 16px;
+            color: var(--text-muted);
+            line-height: 1.8;
+            margin-bottom: 30px;
+        }
+
+        /* SEÇÃO 7 — ACRÉSCIMOS */
+        .addons-section {
+            background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+            padding: 60px 0;
+            text-align: center;
+            color: var(--bg-base);
+        }
+        .addons-title {
+            font-size: 40px;
+            margin-bottom: 30px;
+        }
+        .addons-flex {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        .addon-pill {
+            background: rgba(15, 15, 17, 0.9);
+            backdrop-filter: blur(10px);
+            color: #FFF;
+            padding: 12px 25px;
+            border-radius: 30px;
+            font-weight: 600;
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        .addon-pill span {
+            color: var(--gold);
+            font-family: var(--font-title);
+            font-size: 20px;
+        }
+
+        /* SEÇÃO 8 — CTA FINAL */
+        .cta-section {
+            background: linear-gradient(135deg, var(--red-light), var(--red));
+            padding: 100px 0;
+            text-align: center;
+        }
+        .cta-title {
+            font-size: 80px;
+            margin-bottom: 10px;
+            text-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+        .cta-desc {
+            font-size: 20px;
+            margin-bottom: 40px;
+            font-weight: 300;
+        }
+        .btn-giant {
+            font-size: 20px;
+            padding: 20px 50px;
+            border-radius: 40px;
+        }
+
+        /* SEÇÃO DE LOCALIZAÇÃO */
+        .location-section {
+            padding: 80px 0;
+            background: var(--bg-alt);
+        }
+        .map-wrapper {
+            width: 100%;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.5);
+            border: 1px solid rgba(255,255,255,0.05);
+            margin-top: 40px;
+        }
+        .map-wrapper iframe {
+            width: 100%;
+            height: 450px;
+            display: block;
+            filter: invert(90%) hue-rotate(180deg) grayscale(20%) contrast(90%);
+        }
+
+        /* SEÇÃO 9 — FOOTER */
+        .footer {
+            background: var(--bg-base);
+            padding: 80px 0 30px;
+            border-top: 1px solid #222;
+        }
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1.5fr;
+            gap: 40px;
+            margin-bottom: 60px;
+        }
+        .footer-logo {
+            font-size: 40px;
+            margin-bottom: 15px;
+            display: inline-block;
+        }
+        .footer-desc {
+            color: var(--text-muted);
+            font-size: 14px;
+            margin-bottom: 20px;
+            max-width: 300px;
+        }
+        .footer-title {
+            font-family: var(--font-title);
+            font-size: 24px;
+            color: #FFF;
+            margin-bottom: 25px;
+            letter-spacing: 1px;
+        }
+        .footer-links {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        .footer-links a {
+            color: var(--text-muted);
+            transition: color 0.3s;
+        }
+        .footer-links a:hover {
+            color: var(--gold);
+        }
+        .footer-contact p {
+            color: var(--text-muted);
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .footer-contact i { color: var(--red-light); }
+        
+        .footer-socials {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        .footer-socials a {
+            width: 40px; height: 40px;
+            border-radius: 50%;
+            background: var(--bg-light);
+            display: flex; justify-content: center; align-items: center;
+            color: #FFF;
+            transition: all 0.3s;
+        }
+        .footer-socials a:hover {
+            background: var(--gold);
+            color: var(--bg-base);
+            transform: translateY(-3px);
+        }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(255,255,255,0.1);
+            padding-top: 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: var(--text-muted);
+            font-size: 14px;
+        }
+        .payment-methods {
+            display: flex;
+            gap: 15px;
+            font-size: 24px;
+        }
+
+        /* Floating WhatsApp */
+        .float-wa {
+            position: fixed;
+            bottom: 30px; right: 30px;
+            background: linear-gradient(135deg, #25D366, #128C7E);
+            color: white;
+            width: 60px; height: 60px;
+            border-radius: 50%;
+            display: flex; justify-content: center; align-items: center;
+            font-size: 30px;
+            box-shadow: 0 5px 20px rgba(37, 211, 102, 0.5);
+            z-index: 1000;
+            transition: all 0.3s;
+        }
+        .float-wa:hover {
+            transform: scale(1.1);
+            background: #128C7E;
+        }
+
+        /* Modais e Carrinho */
+        .modal-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.8); z-index: 2000;
+            display: none; justify-content: center; align-items: center;
+            backdrop-filter: blur(5px);
+        }
+        .modal-content {
+            background: rgba(22, 22, 26, 0.95);
+            backdrop-filter: blur(20px);
+            padding: 40px;
+            border-radius: 24px;
+            width: 90%;
+            max-width: 500px;
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            position: relative;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.5);
+        }
+        .close-modal, .close-cart {
+            position: absolute; top: 15px; right: 20px; font-size: 30px;
+            color: var(--text-muted); cursor: pointer; transition: color 0.3s;
+        }
+        .close-modal:hover, .close-cart:hover { color: var(--red-light); }
+
+        .addon-checkbox {
+            display: block; margin-bottom: 10px; cursor: pointer; font-size: 16px;
+        }
+        .addon-checkbox input { margin-right: 10px; accent-color: var(--red); transform: scale(1.2); }
+
+        .drink-select {
+            width: 100%; padding: 12px; background: var(--bg-base); color: white;
+            border: 1px solid rgba(255,215,0,0.3); border-radius: 8px; font-size: 16px;
+            font-family: var(--font-text); outline: none;
+        }
+        .drink-select:focus { border-color: var(--gold); }
+
+        .quantity-control {
+            display: flex; align-items: center; gap: 15px; background: var(--bg-base);
+            padding: 5px 15px; border-radius: 30px; border: 1px solid rgba(255,255,255,0.1);
+        }
+        .quantity-control button {
+            background: none; border: none; color: var(--gold); font-size: 24px;
+            cursor: pointer; font-family: var(--font-title);
+        }
+        .quantity-control span { font-size: 20px; font-weight: bold; }
+
+        .cart-sidebar {
+            position: fixed; top: 0; right: -400px; width: 100%; max-width: 400px;
+            height: 100%; background: rgba(15, 15, 17, 0.95); z-index: 2000;
+            backdrop-filter: blur(20px);
+            border-left: 1px solid rgba(255,255,255,0.05); transition: right 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            display: flex; flex-direction: column;
+            box-shadow: -10px 0 30px rgba(0,0,0,0.5);
+        }
+        .cart-sidebar.open { right: 0; }
+        .cart-header { padding: 20px; border-bottom: 1px solid rgba(255,255,255,0.1); position: relative; }
+        .cart-items { flex-grow: 1; overflow-y: auto; padding: 20px; }
+        .cart-footer { padding: 20px; border-top: 1px solid rgba(255,255,255,0.1); background: var(--bg-base); }
+
+        .cart-item {
+            background: rgba(22, 22, 26, 0.6); padding: 15px; border-radius: 12px;
+            margin-bottom: 15px; border: 1px solid rgba(255,255,255,0.05);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        .cart-item-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 5px; }
+        .cart-item-title { font-weight: bold; font-size: 16px; color: var(--gold); }
+        .cart-item-remove { color: var(--red-light); cursor: pointer; font-size: 14px; }
+        .cart-item-addons { font-size: 12px; color: var(--text-muted); margin-bottom: 10px; }
+        .cart-item-price { font-family: var(--font-title); font-size: 20px; }
+
+        .float-cart {
+            position: fixed; bottom: 100px; right: 30px; background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+            color: var(--bg-base); width: 60px; height: 60px; border-radius: 50%;
+            display: flex; justify-content: center; align-items: center; font-size: 24px;
+            box-shadow: 0 5px 20px rgba(212, 175, 55, 0.4); z-index: 1000; cursor: pointer;
+            transition: all 0.3s;
+        }
+        .float-cart:hover { transform: scale(1.1); background: var(--gold-dark); }
+        .cart-count {
+            position: absolute; top: -5px; right: -5px; background: var(--red);
+            color: white; font-size: 12px; font-weight: bold; width: 24px; height: 24px;
+            border-radius: 50%; display: flex; justify-content: center; align-items: center;
+            border: 2px solid var(--bg-base);
+        }
+
+        /* Responsividade */
+        @media (max-width: 1024px) {
+            .menu-card { flex: 0 0 calc(33.333% - 20px); }
+            .hero-title { font-size: 80px; }
+            .stats-container { gap: 40px; }
+        }
+
+        @media (max-width: 768px) {
+            .fixed-socials { display: none; }
+            .menu-toggle { display: block; }
+            .nav-links, .nav-actions .btn { display: none; }
+            
+            /* Mobile Menu Active State */
+            .nav-links.active {
+                display: flex;
+                flex-direction: column;
+                position: absolute;
+                top: 100%; left: 0; width: 100%;
+                background: var(--bg-base);
+                padding: 20px;
+                border-bottom: 1px solid rgba(255,255,255,0.1);
+            }
+
+            .hero-container { grid-template-columns: 1fr; text-align: center; }
+            .hero-desc { margin: 0 auto 30px; }
+            .hero-badge { right: 10%; top: 0; }
+
+            .menu-card { flex: 0 0 calc(85%); } /* Carrossel Mobile */
+            .carousel-container { padding: 0; }
+            .carousel-btn { display: none; } /* Hide arrows on mobile, rely on swipe */
+
+            .sides-grid, .diff-grid, .about-grid { grid-template-columns: 1fr; }
+            .stats-container { flex-direction: column; gap: 30px; }
+            
+            .footer-grid { grid-template-columns: 1fr; text-align: center; }
+            .footer-desc { margin: 0 auto 20px; }
+            .footer-contact p { justify-content: center; }
+            .footer-socials { justify-content: center; }
+            .footer-bottom { flex-direction: column; gap: 20px; }
+            
+            .cta-title { font-size: 50px; }
+            .btn-giant { font-size: 16px; padding: 15px 30px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- SEÇÃO 1 — NAVBAR FIXA -->
+    <nav class="navbar" id="navbar">
+        <div class="container nav-container">
+            <a href="#" class="nav-logo bebas">
+                <svg viewBox="0 0 24 24"><path d="M22 13C22 14.1 21.1 15 20 15H4C2.9 15 2 14.1 2 13S2.9 11 4 11H20C21.1 11 22 11.9 22 13M12 3C7.6 3 4 6.6 4 11H20C20 6.6 16.4 3 12 3M4 17H20V19C20 20.1 19.1 21 18 21H6C4.9 21 4 20.1 4 19V17Z"/></svg>
+                <span class="text-gold">JP</span> <span class="text-red">LANCHES</span>
+            </a>
+            
+            <div class="nav-links" id="nav-links">
+                <a href="#inicio">Início</a>
+                <a href="#cardapio">Cardápio</a>
+                <a href="#bebidas">Bebidas</a>
+                <a href="#contato">Contato</a>
+            </div>
+            
+            <div class="nav-actions">
+                <a href="#cardapio" class="btn btn-gold">Fazer Pedido</a>
+                <i class="fa-solid fa-bars menu-toggle" id="menu-toggle"></i>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Redes Sociais Fixas -->
+    <div class="fixed-socials">
+        <a href="https://www.instagram.com/jp_lanches30/" target="_blank" title="Instagram"><i class="fa-brands fa-instagram"></i></a>
+        <a href="https://wa.me/5521986786447" target="_blank" title="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
+    </div>
+
+    <!-- SEÇÃO 2 — HERO PRINCIPAL -->
+    <section class="hero" id="inicio">
+        <div class="container hero-container">
+            <div class="hero-content fade-up">
+                <span class="hero-tag">🔥 Nova Sensação</span>
+                <h1 class="hero-title bebas"><span class="text-gold">JP</span><br>LANCHES</h1>
+                <h2 class="hero-subtitle"><i>sabor que você respeita</i></h2>
+                <p class="hero-desc">Peça sem fila e sem espera. Entrega rápida na sua porta com a qualidade que você merece.</p>
+                <a href="#cardapio" class="btn btn-red" style="font-size: 18px; padding: 15px 40px;">PEDIR AGORA</a>
+            </div>
+            <div class="hero-image-wrapper fade-up" style="transition-delay: 0.2s;">
+                <div class="hero-badge bebas">nova<br>receita</div>
+                <!-- SUBSTITUA PELA FOTO DO SEU HAMBURGUER PRINCIPAL -->
+                <img src="https://images.unsplash.com/photo-1625813506062-0aeb1d7a094b?auto=format&fit=crop&w=800&q=80" alt="Hambúrguer Principal" id="hero-burger" class="hero-image" style="min-height: 400px; background: transparent; border-radius: 20px;">
+            </div>
+        </div>
+    </section>
+
+    <!-- SEÇÃO 3 — CARDÁPIO / MENU -->
+    <section class="menu-section" id="cardapio">
+        <div class="container">
+            <div class="section-header fade-up">
+                <h2 class="section-title bebas">Nosso Cardápio</h2>
+            </div>
+            
+            <div class="carousel-container fade-up" style="transition-delay: 0.2s;">
+                <button class="carousel-btn prev-btn" id="prev-burger"><i class="fa-solid fa-chevron-left"></i></button>
+                <div class="carousel-track" id="burger-track">
+                    <!-- Cards gerados via JS -->
+                </div>
+                <button class="carousel-btn next-btn" id="next-burger"><i class="fa-solid fa-chevron-right"></i></button>
+            </div>
+        </div>
+    </section>
+
+    <!-- SEÇÃO 4 — BATATAS & BEBIDAS -->
+    <section class="sides-section" id="bebidas">
+        <div class="container">
+            <div class="sides-grid">
+                <!-- Batatas -->
+                <div class="fries-container fade-up">
+                    <h2 class="bebas text-gold" style="font-size: 40px; margin-bottom: 30px;">Porções</h2>
+                    <div id="fries-list">
+                        <!-- Gerado via JS -->
+                    </div>
+                </div>
+                
+                <!-- Bebidas -->
+                <div class="drinks-container fade-up" style="transition-delay: 0.2s;">
+                    <h2 class="bebas text-red" style="font-size: 40px; margin-bottom: 30px;">Bebidas</h2>
+                    <div class="drinks-list">
+                        <div class="drink-item">
+                            <span class="drink-name">Guaracamp</span>
+                            <div class="drink-dots"></div>
+                            <span class="drink-price">R$ 3,00</span>
+                        </div>
+                        <div class="drink-item">
+                            <span class="drink-name">Refri Lata</span>
+                            <div class="drink-dots"></div>
+                            <span class="drink-price">R$ 6,00</span>
+                        </div>
+                        <div class="drink-item">
+                            <span class="drink-name">Refri 1,5L</span>
+                            <div class="drink-dots"></div>
+                            <span class="drink-price">R$ 9,00</span>
+                        </div>
+                        <div class="drink-item">
+                            <span class="drink-name">Refri 2L</span>
+                            <div class="drink-dots"></div>
+                            <span class="drink-price">R$ 12,00</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SEÇÃO 5 — DIFERENCIAIS -->
+    <section class="differentials">
+        <div class="container">
+            <div class="diff-grid">
+                <div class="diff-card fade-up">
+                    <i class="fa-solid fa-motorcycle diff-icon"></i>
+                    <h3 class="diff-title bebas">Entrega Rápida</h3>
+                    <p class="diff-desc">Contamos com o melhor time de delivery pra você.</p>
+                </div>
+                <div class="diff-card fade-up" style="transition-delay: 0.2s;">
+                    <i class="fa-solid fa-fire diff-icon"></i>
+                    <h3 class="diff-title bebas">Pedido Quente</h3>
+                    <p class="diff-desc">Não se preocupe em ter que requentar o pedido.</p>
+                </div>
+                <div class="diff-card fade-up" style="transition-delay: 0.4s;">
+                    <i class="fa-solid fa-star diff-icon"></i>
+                    <h3 class="diff-title bebas">Sabor Garantido</h3>
+                    <p class="diff-desc">O sabor que você respeita em cada mordida.</p>
+                </div>
+            </div>
+            
+            <div class="stats-container fade-up" id="stats">
+                <div class="stat-item">
+                    <div class="stat-num" data-target="500">0</div>
+                    <div class="stat-label">Pedidos</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-num" data-target="11">0</div>
+                    <div class="stat-label">Sabores</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-num" data-target="4">0</div>
+                    <div class="stat-label">Anos</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SEÇÃO 6 — GALERIA / SOBRE -->
+    <section class="about-section">
+        <div class="container">
+            <div class="about-grid">
+                <div class="gallery-grid fade-up">
+                    <!-- ADICIONE FOTO DO AMBIENTE / PRODUTO AQUI -->
+                    <img src="" alt="Galeria 1" class="gallery-img">
+                    <!-- ADICIONE FOTO DO AMBIENTE / PRODUTO AQUI -->
+                    <img src="" alt="Galeria 2" class="gallery-img">
+                    <!-- ADICIONE FOTO DO AMBIENTE / PRODUTO AQUI -->
+                    <img src="" alt="Galeria 3" class="gallery-img">
+                </div>
+                <div class="about-text fade-up" style="transition-delay: 0.2s;">
+                    <h2 class="bebas">Nossa História</h2>
+                    <p>A JP Lanches nasceu da paixão por hambúrgueres de verdade. Cada lanche é feito com ingredientes frescos, blend selecionado e muito amor. Nosso compromisso é entregar não apenas uma refeição, mas uma experiência incrível.</p>
+                    <p>Venha nos visitar ou peça pelo delivery e descubra por que somos o sabor que você respeita!</p>
+                    <a href="https://wa.me/5521986786447" target="_blank" class="btn btn-red mt-4">FALAR NO WHATSAPP</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SEÇÃO 7 — ACRÉSCIMOS -->
+    <section class="addons-section fade-up">
+        <div class="container">
+            <h2 class="addons-title bebas">Personalize seu Lanche 🔥</h2>
+            <div class="addons-flex">
+                <div class="addon-pill">Carne <span>+R$3,50</span></div>
+                <div class="addon-pill">Ovo <span>+R$2,50</span></div>
+                <div class="addon-pill">Cheddar <span>+R$2,00</span></div>
+                <div class="addon-pill">Bacon <span>+R$2,50</span></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SEÇÃO 8 — CTA FINAL -->
+    <section class="cta-section fade-up">
+        <div class="container">
+            <h2 class="cta-title bebas text-main">BORA PEDIR AGORA?</h2>
+            <p class="cta-desc text-main">Entrega rápida e gostosura garantida!</p>
+            <a href="https://wa.me/5521986786447" target="_blank" class="btn btn-green btn-giant">
+                <i class="fa-brands fa-whatsapp" style="margin-right: 10px; font-size: 24px;"></i> PEDIR VIA WHATSAPP
+            </a>
+        </div>
+    </section>
+
+    <!-- SEÇÃO DE LOCALIZAÇÃO -->
+    <section class="location-section fade-up">
+        <div class="container">
+            <h2 class="section-title bebas text-center" style="margin-bottom: 10px;">Onde Estamos</h2>
+            <p class="text-center text-muted" style="margin-bottom: 0;">Rua Tenente Agenor Brito, 337 - Rio de Janeiro, RJ - 23013-440</p>
+            <div class="map-wrapper">
+                <iframe 
+                    src="https://maps.google.com/maps?q=Rua%20Tenente%20Agenor%20Brito%20337,%20Rio%20de%20Janeiro,%20RJ&t=&z=16&ie=UTF8&iwloc=&output=embed" 
+                    width="100%" 
+                    height="450" 
+                    style="border:0;" 
+                    allowfullscreen="" 
+                    loading="lazy" 
+                    referrerpolicy="no-referrer-when-downgrade">
+                </iframe>
+            </div>
+        </div>
+    </section>
+
+    <!-- SEÇÃO 9 — FOOTER -->
+    <footer class="footer" id="contato">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <a href="#" class="footer-logo bebas"><span class="text-gold">JP</span> <span class="text-red">LANCHES</span></a>
+                    <p class="footer-desc">O sabor que você respeita! Hambúrgueres artesanais feitos com paixão e ingredientes de primeira.</p>
+                    <div class="footer-socials">
+                        <a href="https://www.instagram.com/jp_lanches30/" target="_blank" title="Instagram"><i class="fa-brands fa-instagram"></i></a>
+                        <a href="https://wa.me/5521986786447" target="_blank" title="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-col">
+                    <h4 class="footer-title">Navegação</h4>
+                    <div class="footer-links">
+                        <a href="#inicio">Início</a>
+                        <a href="#cardapio">Cardápio</a>
+                        <a href="#bebidas">Bebidas</a>
+                        <a href="#contato">Contato</a>
+                    </div>
+                </div>
+                
+                <div class="footer-col">
+                    <h4 class="footer-title">Horários</h4>
+                    <div class="footer-links">
+                        <span class="text-muted">Terça a Domingo</span>
+                        <span class="text-gold">18:00 às 23:30</span>
+                        <span class="text-muted mt-2">Segunda-feira</span>
+                        <span class="text-red-light">Fechado</span>
+                    </div>
+                </div>
+                
+                <div class="footer-col footer-contact">
+                    <h4 class="footer-title">Contato</h4>
+                    <p><i class="fa-solid fa-phone"></i> (21) 98678-6447</p>
+                    <p><i class="fa-solid fa-phone"></i> (21) 96666-3221</p>
+                    <p style="align-items: flex-start;"><i class="fa-solid fa-location-dot" style="margin-top: 5px;"></i> <span>Rua Tenente Agenor Brito, 337<br>Rio de Janeiro, RJ - 23013-440</span></p>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>© 2025 JP Lanches — O sabor que você respeita!</p>
+                <div class="payment-methods">
+                    <i class="fa-brands fa-pix" style="color: #32BCAD;" title="Pix"></i>
+                    <i class="fa-brands fa-cc-visa" title="Visa"></i>
+                    <i class="fa-brands fa-cc-mastercard" title="Mastercard"></i>
+                    <i class="fa-solid fa-money-bill-wave" style="color: #85bb65;" title="Dinheiro"></i>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Botão Flutuante WhatsApp -->
+    <a href="https://wa.me/5521986786447" target="_blank" class="float-wa">
+        <i class="fa-brands fa-whatsapp"></i>
+    </a>
+
+    <!-- Botão Flutuante Carrinho -->
+    <div class="float-cart" onclick="toggleCart()">
+        <i class="fa-solid fa-cart-shopping"></i>
+        <span id="cart-count" class="cart-count">0</span>
+    </div>
+
+    <!-- Modal de Adicionar ao Carrinho -->
+    <div id="item-modal" class="modal-overlay">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeItemModal()">&times;</span>
+            <h2 id="modal-item-name" class="bebas text-red" style="font-size: 32px; margin-bottom: 10px;">Nome do Item</h2>
+            <p id="modal-item-desc" class="text-muted" style="margin-bottom: 20px;">Descrição</p>
+            
+            <div id="modal-addons-section">
+                <h3 class="bebas text-gold" style="font-size: 24px; margin-bottom: 10px;">Acompanhamentos</h3>
+                <div class="addons-list" id="modal-addons">
+                    <label class="addon-checkbox"><input type="checkbox" value="3.50" data-name="Carne Extra"> Carne Extra (+ R$ 3,50)</label>
+                    <label class="addon-checkbox"><input type="checkbox" value="2.50" data-name="Ovo"> Ovo (+ R$ 2,50)</label>
+                    <label class="addon-checkbox"><input type="checkbox" value="2.00" data-name="Cheddar"> Cheddar (+ R$ 2,00)</label>
+                    <label class="addon-checkbox"><input type="checkbox" value="2.50" data-name="Bacon"> Bacon (+ R$ 2,50)</label>
+                </div>
+            </div>
+
+            <h3 class="bebas text-gold" style="font-size: 24px; margin-top: 20px; margin-bottom: 10px;">Bebida</h3>
+            <select id="modal-drink" class="drink-select">
+                <option value="0" data-name="">Sem bebida</option>
+                <option value="3.00" data-name="Guaracamp">Guaracamp (+ R$ 3,00)</option>
+                <option value="6.00" data-name="Refri Lata">Refri Lata (+ R$ 6,00)</option>
+                <option value="9.00" data-name="Refri 1.5L">Refri 1.5L (+ R$ 9,00)</option>
+                <option value="12.00" data-name="Refri 2L">Refri 2L (+ R$ 12,00)</option>
+            </select>
+
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 30px;">
+                <div class="quantity-control">
+                    <button onclick="changeQuantity(-1)">-</button>
+                    <span id="modal-quantity">1</span>
+                    <button onclick="changeQuantity(1)">+</button>
+                </div>
+                <div class="modal-total bebas text-gold" style="font-size: 28px;">R$ <span id="modal-total-price">0,00</span></div>
+            </div>
+
+            <button class="btn btn-red" style="width: 100%; margin-top: 20px; font-size: 20px;" onclick="addToCart()">Adicionar ao Carrinho</button>
+        </div>
+    </div>
+
+    <!-- Sidebar do Carrinho -->
+    <div id="cart-sidebar" class="cart-sidebar">
+        <div class="cart-header">
+            <h2 class="bebas text-gold" style="font-size: 32px;">Seu Carrinho</h2>
+            <span class="close-cart" onclick="toggleCart()">&times;</span>
+        </div>
+        <div id="cart-items" class="cart-items">
+            <p style="text-align: center; color: var(--text-muted); margin-top: 50px;">Seu carrinho está vazio.</p>
+        </div>
+        <div class="cart-footer">
+            <div style="display: flex; justify-content: space-between; margin-bottom: 20px; font-size: 24px;" class="bebas">
+                <span>Total:</span>
+                <span class="text-gold">R$ <span id="cart-total">0,00</span></span>
+            </div>
+            <button class="btn btn-green" style="width: 100%; font-size: 20px;" onclick="checkout()">Finalizar Pedido <i class="fa-brands fa-whatsapp" style="margin-left: 10px;"></i></button>
+        </div>
+    </div>
+
+    <!-- JAVASCRIPT -->
+    <script>
+        // Dados do Cardápio
+        const burgers = [
+            { name: "Hambúrguer", desc: "Carne, cheddar e presunto", price: "9,00", image: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=500&q=80" },
+            { name: "Cheddar Burguer", desc: "Carne, cheddar e cebola caramelizada ao molho shoyu", price: "12,00", image: "https://images.unsplash.com/photo-1586190848861-99aa4a171e90?auto=format&fit=crop&w=500&q=80" },
+            { name: "JP Salada", desc: "Carne, ovo, cheddar e salada", price: "14,00", image: "https://images.unsplash.com/photo-1550547660-d9450f859349?auto=format&fit=crop&w=500&q=80" },
+            { name: "Duplo Cheddar", desc: "2 carnes, cheddar, presunto e cebola caramelizada ao molho shoyu", price: "16,00", image: "https://images.unsplash.com/photo-1610440042657-612c34d95e9f?auto=format&fit=crop&w=500&q=80" },
+            { name: "Duplo Cheddar Bacon", desc: "2 carnes, 1 ovo, cheddar e bacon", price: "18,00", image: "https://images.unsplash.com/photo-1598182198871-d3f4ab4fd181?auto=format&fit=crop&w=500&q=80" },
+            { name: "Triplo Cheddar Bacon", desc: "3 carnes, 1 ovo, cheddar e bacon", price: "20,00", image: "https://images.unsplash.com/photo-1553979459-d2229ba7433b?auto=format&fit=crop&w=500&q=80" },
+            { name: "JP Picanha", desc: "Carne de picanha, ovo, cheddar, presunto, bacon, calabresa e salada", price: "18,00", image: "https://images.unsplash.com/photo-1572802419224-296b0aeee0d9?auto=format&fit=crop&w=500&q=80" },
+            { name: "JP Tudão", desc: "2 carnes, 2 ovos, cheddar, presunto, bacon, calabresa e salada", price: "21,00", image: "https://images.unsplash.com/photo-1586816001966-79b736744398?auto=format&fit=crop&w=500&q=80" },
+            { name: "Duplo Picanha", desc: "2 carnes de picanha, 2 ovos, cheddar, presunto, bacon, calabresa e salada", price: "22,00", image: "https://images.unsplash.com/photo-1596662951482-0c4ba74a6df6?auto=format&fit=crop&w=500&q=80" },
+            { name: "Quarteto JP", desc: "4 carnes, 1 ovo, cheddar, bacon e calabresa", price: "23,00", image: "https://images.unsplash.com/photo-1551782450-a2132b4ba21d?auto=format&fit=crop&w=500&q=80" },
+            { name: "Big JP", desc: "5 carnes, 2 ovos, cheddar, bacon e calabresa", price: "25,00", image: "https://images.unsplash.com/photo-1625813506062-0aeb1d7a094b?auto=format&fit=crop&w=500&q=80" }
+        ];
+
+        const fries = [
+            { name: "Batata Frita P", desc: "Porção pequena e crocante", price: "7,00", image: "https://images.unsplash.com/photo-1576107232684-1279f390859f?auto=format&fit=crop&w=500&q=80" },
+            { name: "Batata Frita M", desc: "Porção média para dividir", price: "12,00", image: "https://images.unsplash.com/photo-1630384060421-cb20d0e0649d?auto=format&fit=crop&w=500&q=80" },
+            { name: "Batata Frita Maluca", desc: "Bacon, calabresa e cheddar", price: "22,00", image: "https://images.unsplash.com/photo-1534080564583-6be75777b70a?auto=format&fit=crop&w=500&q=80" }
+        ];
+
+        // Função para gerar link do WhatsApp
+        const getWaLink = (item) => `https://wa.me/5521986786447?text=${encodeURIComponent(`Olá! Quero pedir um ${item} 🍔`)}`;
+
+        // Renderizar Hambúrgueres
+        const burgerTrack = document.getElementById('burger-track');
+        burgers.forEach((b, index) => {
+            const colorClass = index % 2 === 0 ? 'red' : 'gold';
+            burgerTrack.innerHTML += `
+                <div class="menu-card">
+                    <div class="card-tag ${colorClass}">DESTAQUE</div>
+                    <div class="card-img-wrapper">
+                        <img src="${b.image || ''}" alt="${b.name}" class="card-img" style="background: transparent; min-width: 150px; min-height: 150px; border-radius: 10px;">
+                    </div>
+                    <h3 class="card-title bebas">${b.name}</h3>
+                    <p class="card-desc">${b.desc}</p>
+                    <button onclick="openItemModal('${b.name}', '${b.price}', '${b.desc}', 'burger')" class="card-price-btn">R$ ${b.price}</button>
+                </div>
+            `;
+        });
+
+        // Renderizar Batatas
+        const friesList = document.getElementById('fries-list');
+        fries.forEach((f, index) => {
+            const colorClass = index % 2 === 0 ? 'gold' : 'red';
+            friesList.innerHTML += `
+                <div class="menu-card" style="flex-direction: row; align-items: center; gap: 20px; padding: 15px 20px;">
+                    <img src="${f.image}" alt="${f.name}" style="width: 80px; height: 80px; object-fit: cover; border-radius: 10px;">
+                    <div style="flex-grow: 1;">
+                        <h3 class="bebas" style="font-size: 24px; color: var(--${colorClass});">${f.name}</h3>
+                        <p style="font-size: 13px; color: var(--text-muted);">${f.desc}</p>
+                    </div>
+                    <button onclick="openItemModal('${f.name}', '${f.price}', '${f.desc}', 'fries')" class="btn btn-gold" style="padding: 8px 20px; font-size: 18px; font-family: var(--font-title); border: none;">R$ ${f.price}</button>
+                </div>
+            `;
+        });
+
+        // Navbar Scroll Effect
+        window.addEventListener('scroll', () => {
+            const nav = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                nav.classList.add('scrolled');
+            } else {
+                nav.classList.remove('scrolled');
+            }
+        });
+
+        // Mobile Menu Toggle
+        const menuToggle = document.getElementById('menu-toggle');
+        const navLinks = document.getElementById('nav-links');
+        menuToggle.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+            menuToggle.classList.toggle('fa-bars');
+            menuToggle.classList.toggle('fa-xmark');
+        });
+        
+        // Fechar menu ao clicar em link
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                navLinks.classList.remove('active');
+                menuToggle.classList.add('fa-bars');
+                menuToggle.classList.remove('fa-xmark');
+            });
+        });
+
+        // Carrossel Desktop Navigation
+        const track = document.getElementById('burger-track');
+        document.getElementById('next-burger').addEventListener('click', () => {
+            track.scrollBy({ left: 300, behavior: 'smooth' });
+        });
+        document.getElementById('prev-burger').addEventListener('click', () => {
+            track.scrollBy({ left: -300, behavior: 'smooth' });
+        });
+
+        // Intersection Observer para Fade-in e Contadores
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: "0px 0px -50px 0px"
+        };
+
+        let countersAnimated = false;
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    
+                    // Animar contadores quando a seção aparecer
+                    if (entry.target.id === 'stats' && !countersAnimated) {
+                        countersAnimated = true;
+                        document.querySelectorAll('.stat-num').forEach(counter => {
+                            const target = +counter.getAttribute('data-target');
+                            const duration = 2000;
+                            const increment = target / (duration / 16);
+                            let current = 0;
+                            
+                            const updateCounter = () => {
+                                current += increment;
+                                if (current < target) {
+                                    counter.innerText = '+' + Math.ceil(current);
+                                    requestAnimationFrame(updateCounter);
+                                } else {
+                                    counter.innerText = '+' + target;
+                                }
+                            };
+                            updateCounter();
+                        });
+                    }
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+        // Lógica do Carrinho
+        let cart = [];
+        let currentItem = null;
+
+        function parsePrice(priceStr) {
+            return parseFloat(priceStr.replace(',', '.'));
+        }
+
+        function formatPrice(price) {
+            return price.toFixed(2).replace('.', ',');
+        }
+
+        function openItemModal(name, price, desc, type = 'burger') {
+            currentItem = {
+                name: name,
+                basePrice: parsePrice(price),
+                quantity: 1
+            };
+            
+            document.getElementById('modal-item-name').innerText = name;
+            document.getElementById('modal-item-desc').innerText = desc;
+            document.getElementById('modal-quantity').innerText = '1';
+            
+            // Toggle addons visibility based on type
+            const addonsSection = document.getElementById('modal-addons-section');
+            if (type === 'fries') {
+                addonsSection.style.display = 'none';
+            } else {
+                addonsSection.style.display = 'block';
+            }
+            
+            // Reset inputs
+            document.querySelectorAll('.addon-checkbox input').forEach(cb => cb.checked = false);
+            document.getElementById('modal-drink').value = "0";
+            
+            updateModalPrice();
+            document.getElementById('item-modal').style.display = 'flex';
+        }
+
+        function closeItemModal() {
+            document.getElementById('item-modal').style.display = 'none';
+        }
+
+        function changeQuantity(delta) {
+            if (currentItem.quantity + delta >= 1) {
+                currentItem.quantity += delta;
+                document.getElementById('modal-quantity').innerText = currentItem.quantity;
+                updateModalPrice();
+            }
+        }
+
+        function updateModalPrice() {
+            let total = currentItem.basePrice;
+            
+            document.querySelectorAll('.addon-checkbox input:checked').forEach(cb => {
+                total += parseFloat(cb.value);
+            });
+            
+            const drinkSelect = document.getElementById('modal-drink');
+            total += parseFloat(drinkSelect.value);
+            
+            total *= currentItem.quantity;
+            
+            document.getElementById('modal-total-price').innerText = formatPrice(total);
+        }
+
+        document.querySelectorAll('.addon-checkbox input').forEach(cb => {
+            cb.addEventListener('change', updateModalPrice);
+        });
+        document.getElementById('modal-drink').addEventListener('change', updateModalPrice);
+
+        function addToCart() {
+            let addons = [];
+            let addonsTotal = 0;
+            
+            document.querySelectorAll('.addon-checkbox input:checked').forEach(cb => {
+                addons.push(cb.getAttribute('data-name'));
+                addonsTotal += parseFloat(cb.value);
+            });
+            
+            const drinkSelect = document.getElementById('modal-drink');
+            if (drinkSelect.value !== "0") {
+                const drinkOption = drinkSelect.options[drinkSelect.selectedIndex];
+                addons.push(drinkOption.getAttribute('data-name'));
+                addonsTotal += parseFloat(drinkSelect.value);
+            }
+            
+            const unitPrice = currentItem.basePrice + addonsTotal;
+            const totalPrice = unitPrice * currentItem.quantity;
+            
+            cart.push({
+                name: currentItem.name,
+                addons: addons,
+                quantity: currentItem.quantity,
+                unitPrice: unitPrice,
+                totalPrice: totalPrice
+            });
+            
+            updateCartUI();
+            closeItemModal();
+            toggleCart(true);
+        }
+
+        function updateCartUI() {
+            const cartItemsContainer = document.getElementById('cart-items');
+            cartItemsContainer.innerHTML = '';
+            
+            let grandTotal = 0;
+            let totalItems = 0;
+            
+            cart.forEach((item, index) => {
+                grandTotal += item.totalPrice;
+                totalItems += item.quantity;
+                
+                let addonsText = item.addons.length > 0 ? `+ ${item.addons.join(', ')}` : '';
+                
+                cartItemsContainer.innerHTML += `
+                    <div class="cart-item">
+                        <div class="cart-item-header">
+                            <span class="cart-item-title">${item.quantity}x ${item.name}</span>
+                            <span class="cart-item-remove" onclick="removeFromCart(${index})"><i class="fa-solid fa-trash"></i></span>
+                        </div>
+                        <div class="cart-item-addons">${addonsText}</div>
+                        <div class="cart-item-price">R$ ${formatPrice(item.totalPrice)}</div>
+                    </div>
+                `;
+            });
+            
+            document.getElementById('cart-total').innerText = formatPrice(grandTotal);
+            document.getElementById('cart-count').innerText = totalItems;
+            
+            if (cart.length === 0) {
+                cartItemsContainer.innerHTML = '<p style="text-align: center; color: var(--text-muted); margin-top: 50px;">Seu carrinho está vazio.</p>';
+            }
+        }
+
+        function removeFromCart(index) {
+            cart.splice(index, 1);
+            updateCartUI();
+        }
+
+        function toggleCart(forceOpen = false) {
+            const sidebar = document.getElementById('cart-sidebar');
+            if (forceOpen === true) {
+                sidebar.classList.add('open');
+            } else {
+                sidebar.classList.toggle('open');
+            }
+        }
+
+        function checkout() {
+            if (cart.length === 0) {
+                alert("Seu carrinho está vazio!");
+                return;
+            }
+            
+            let message = "*NOVO PEDIDO - JP LANCHES* 🍔\n\n";
+            let grandTotal = 0;
+            
+            cart.forEach(item => {
+                message += `*${item.quantity}x ${item.name}* - R$ ${formatPrice(item.totalPrice)}\n`;
+                if (item.addons.length > 0) {
+                    message += `   _Adicionais: ${item.addons.join(', ')}_\n`;
+                }
+                message += `\n`;
+                grandTotal += item.totalPrice;
+            });
+            
+            message += `*TOTAL: R$ ${formatPrice(grandTotal)}*\n\n`;
+            message += `Por favor, me informe a forma de pagamento e o endereço de entrega.`;
+            
+            const encodedMessage = encodeURIComponent(message);
+            window.open(`https://wa.me/5521986786447?text=${encodedMessage}`, '_blank');
+        }
+
+    </script>
+</body>
+</html>
